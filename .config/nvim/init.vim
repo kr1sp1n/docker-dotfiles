@@ -1,7 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'kr1sp1n/vim-easy-align'
-" Plug 'joshdick/onedark.vim'
+Plug 'flazz/vim-colorschemes'
 
 " Add plugins to &runtimepath
 call plug#end()
