@@ -1,12 +1,14 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'kr1sp1n/vim-easy-align'
-Plug 'flazz/vim-colorschemes'
+Plug 'kr1sp1n/onedark.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
 
 set background=dark
+colorscheme onedark
+let g:onedark_termcolors=256
 
 " Make Vim more useful
 set nocompatible
