@@ -11,9 +11,7 @@ curl -fLo ./.config/nvim/autoload/plug.vim --create-dirs https://raw.githubuserc
 
 ## Install plugins within a vim docker container
 
-1. ```bash
-docker run --rm -it -v $PWD:/root kr1sp1n/alpine-neovim
-```
+1. ```docker run --rm -it -v $PWD:/root kr1sp1n/alpine-neovim```
 2. ```:PlugInstall```
 
 ## Build docker data-only image
