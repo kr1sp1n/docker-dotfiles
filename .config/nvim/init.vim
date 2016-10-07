@@ -4,9 +4,6 @@ Plug 'junegunn/vim-easy-align'
 call plug#end()
 
 set background=dark
-colorscheme onedark
-
-" let g:solarized_termtrans=1
 
 " Make Vim more useful
 set nocompatible
