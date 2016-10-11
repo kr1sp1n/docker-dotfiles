@@ -2,5 +2,9 @@
 .git
 .gitignore
 Dockerfile
+Makefile
 README.md
 **/.git
+LICENSE
+.local
+.nvimlog
