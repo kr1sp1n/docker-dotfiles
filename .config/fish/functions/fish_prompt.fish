@@ -1,3 +1,1 @@
-function fish_prompt
-  echo $USER:(pwd) "> "
-end
+/root/.config/fisherman/lolfish/fish_prompt.fish
