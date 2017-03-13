@@ -1,4 +1,4 @@
-# docker-dotfiles
+# dotfiles
 
 My dotfiles as Data-only docker image.
 
