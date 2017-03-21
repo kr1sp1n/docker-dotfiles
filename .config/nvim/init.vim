@@ -1,8 +1,8 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'kr1sp1n/vim-easy-align'
-Plug 'kr1sp1n/onedark.vim'
-Plug 'https://github.com/vim-syntastic/syntastic.git'
+Plug 'junegunn/vim-easy-align'
+Plug 'joshdick/onedark.vim'
+Plug 'vim-syntastic/syntastic'
 
 " Add plugins to &runtimepath
 call plug#end()

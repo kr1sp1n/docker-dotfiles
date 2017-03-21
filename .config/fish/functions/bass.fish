@@ -1,1 +1,1 @@
-/root/.config/fisherman/bass/functions/bass.fish
+/Users/krispin/.config/fisherman/bass/functions/bass.fish

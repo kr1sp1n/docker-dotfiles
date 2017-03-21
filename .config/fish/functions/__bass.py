@@ -1,1 +1,1 @@
-/root/.config/fisherman/bass/functions/__bass.py
+/Users/krispin/.config/fisherman/bass/functions/__bass.py

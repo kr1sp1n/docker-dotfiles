@@ -27,15 +27,11 @@ function lolfish -d "such rainbow. wow"
     # n=21 : blue
     # n=26 : magenta
     #
-    # start with a random color
-    if test -z $lolfish_next_color
-        # Use a global variable for lolfish_next_color so the next
-        # iteration of the prompt can continue the color sequence.
-        set -g lolfish_next_color (math (random)%(count $colors plus_one))
-    else if test $lolfish_next_color -gt (count $colors); or test $lolfish_next_color -le 0
-        # Reset lolfish_next_color to the beginning when
-        # it grows beyond the valid color range.
-        set lolfish_next_color 1
+    if test -z $lolfish_next_color; or \
+       test $lolfish_next_color -gt (count $colors); or \
+       test $lolfish_next_color -le 0
+         # set to red
+         set -g lolfish_next_color 1
     end
 
     # Set the color differential between prompt items.
@@ -58,12 +54,12 @@ function lolfish -d "such rainbow. wow"
         end
 
         # saftey checks
+        # set $color if it's not set yet
         if test -z $color
-            # set $color if it's not set yet
             set color $lolfish_next_color
+        # Reset color to the beginning when it grows
+        # beyond the valid color range.
         else if test $color -gt (count $colors); or test $color -le 0
-            # Reset color to the beginning when it grows
-            # beyond the valid color range.
             set color 1
         end
 
@@ -79,6 +75,11 @@ function lolfish -d "such rainbow. wow"
 end
 
 
+# Left side prompt
+#
+# Displays user@hostname:/path
+# Displays git status
+# Displays exit status of previous command
 
 function fish_prompt
 
@@ -119,4 +120,44 @@ function fish_prompt
 
     # finally print the prompt
     lolfish $USER '@' (hostname -s) ':' $current_dir $git_dir $error $prompt ' '
+end
+
+# Right side prompt
+#
+# Displays the number of background processes [&:2]
+# Displays the number of active tmux sessions [tmux:4]
+# Displays the time and date in Minute:Hour Day:Month:Year
+
+function fish_right_prompt
+
+    #
+    # background jobs
+    #
+    set -l background_jobs (count (jobs -p ^/dev/null))
+    if test $background_jobs -gt 0
+        set background_jobs_prompt '[' '&' ':' $background_jobs ']'
+    end
+
+    #
+    # Display the number of background tmux sessions
+    # only if the shell is running outside of tmux
+    #
+    if test -z $TMUX
+        if command -s tmux > /dev/null ^&1
+            set -l tmux_sessions (count (tmux list-sessions ^/dev/null))
+            if test $tmux_sessions -gt 0
+                set tmux_sessions_prompt '[' 'tmux' ':' $tmux_sessions ']'
+            end
+        end
+    end
+
+    #
+    # Display the time and date
+    #
+    if command -s date > /dev/null ^&1
+        set time (date +'%H:%M' ^/dev/null)
+        set date (date +'%d-%m-%Y' ^/dev/null)
+    end
+
+    lolfish $background_jobs_prompt $tmux_sessions_prompt $time ' ' $date
 end

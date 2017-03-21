@@ -67,7 +67,30 @@ A dark Vim color scheme for the GUI and 16/256-color terminals, based on [FlatCo
 
 * `g:onedark_termcolors` **(see [Installation](#installation) (above) before using this setting)**: Set to `256` for 256-color terminals (the default), or set to `16` to use your terminal emulator's native colors.
 
-* `g:onedark_terminal_italics`: Set to `1` if your terminal emulator supports italics; `0` otherwise (the default).
+* `g:onedark_terminal_italics`: Set to `1` if your terminal emulator supports italics; `0` otherwise (the default). If you're using [iTerm2](http://iterm2.com) on macOS, you might need to [use a special TERMINFO](https://gist.github.com/sos4nt/3187620) to get italics working.
+
+## lightline.vim Colorscheme
+
+![lightline-onedark.vim Preview](https://raw.github.com/joshdick/onedark.vim/master/preview_lightline.png)
+
+This repository includes a companion [lightline.vim](https://github.com/itchyny/lightline.vim) colorscheme for use with onedark.vim.
+
+The lightline.vim colorscheme:
+
+* Depends on onedark.vim for its colors, and must therefore be used in conjunction with it.
+* Works with both color modes available in onedark.vim (16 or 256 colors), as specified in the configuration for onedark.vim.
+
+### Installation
+
+(These instructions assume that lightline.vim and onedark.vim are already installed and configured to your liking.)
+
+Place `onedark.vim/autoload/lightline/colorscheme/onedark.vim` in your `~/.vim/autoload/lightline/colorscheme/` directory either manually or by using your Vim plug-in manager of choice, then add the following lines to your `~/.vimrc` (or merge them into your existing lightline.vim configuration):
+
+```vim
+let g:lightline = {
+  \ 'colorscheme': 'onedark',
+  \ }
+```
 
 ## vim-airline Theme
 
@@ -85,16 +108,48 @@ The vim-airline theme:
 
 (These instructions assume that vim-airline and onedark.vim are already installed and configured to your liking.)
 
-Place `onedark.vim` in your `~/.vim/autoload/airline/themes/` directory either manually or by using your Vim plug-in manager of choice, then add the following line to your `~/.vimrc`:
+Place `onedark.vim/autoload/airline/themes/onedark.vim` in your `~/.vim/autoload/airline/themes/` directory either manually or by using your Vim plug-in manager of choice, then add the following line to your `~/.vimrc`:
 
 ```vim
 let g:airline_theme='onedark'
 ```
 
+## Miscellaneous
+
+### Customizing onedark.vim's Look Without Forking the Repository
+
+onedark.vim exposes a function called `onedark#set_highlight` that you can call from within your `~/.vimrc` in order to customize the look of onedark.vim by overriding its defaults.
+
+The function's first argument should be the name of a highlight group, and its second argument should be style data.
+
+For example, to remove the background color only when running in terminals (outside GUI mode and for use in transparent terminals,) place the following lines **before** the `colorscheme onedark` line in your `~/.vimrc`:
+
+```vim
+" onedark.vim override: Don't set a background color when running in a terminal;
+" just use the terminal's background color
+" `gui` is the hex color code used in GUI mode/nvim true-color mode
+" `cterm` is the color code used in 256-color mode
+" `cterm16` is the color code used in 16-color mode
+if (has("autocmd") && !has("gui"))
+  let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
+end
+```
+
+More examples of highlight group names and style data can be found in onedark.vim's source code (`colors/onedark.vim` inside this repository).
+
+### tmux theme
+
+If you'd like a tmux theme that complements onedark.vim, [@odedlaz has you covered](https://github.com/odedlaz/tmux-onedark-theme).
+
+### Contributing
+
+If you'd like to contribute to onedark.vim, check out the [contribution guidelines](./CONTRIBUTING.md).
+
 ---
 
 Preview images were taken using:
 
-* [iTerm2](https://iterm2.com) terminal emulator on Mac OS X
+* [iTerm2](https://iterm2.com) terminal emulator on macOS
 * 12 pt. [PragmataPro Mono](http://www.fsd.it/fonts/pragmatapro.htm#.VlDa1q6rTOY) font
 * [vim-polyglot](https://github.com/sheerun/vim-polyglot) plug-in
