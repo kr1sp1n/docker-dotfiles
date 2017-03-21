@@ -1,1 +1,0 @@
-/Users/krispin/code/my/dotfiles/.vim/

@@ -7,8 +7,10 @@ files=$(git ls-tree --name-only HEAD | grep -v 'install.bash')
 
 mkdir -p $olddir
 
-for file in ${files}; do
-  if [[ -f ~/"${file}" && ( ! -L ~/"${file}" ) ]]; then
+for file in ${files}
+do
+  if [[ -f ~/"${file}" && ( ! -L ~/"${file}" ) ]]
+  then
     echo "Creating backup in $olddir/$file"
     mv ~/"$file" "$olddir/$file"
   fi
